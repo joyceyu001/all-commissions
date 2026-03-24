@@ -1,1 +1,1 @@
-# pottery-commission
+# all-commission
