@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Commissions</title>
+
+<style>
+.page-title{
+    text-align:center;
+    margin-top:20px;
+}
+
+.commission-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:2rem;
+    margin-top:2rem;
+    padding:20px;
+}
+
+.commission-card{
+    padding:1rem;
+    border-radius:16px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    transition:0.3s;
+    background:white;
+}
+
+.commission-card iframe,
+.commission-card audio{
+    width:100%;
+    border-radius:12px;
+    margin-bottom:10px;
+}
+
+.commission-card:hover{
+    transform:translateY(-6px);
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="page-title">Music Commissions</h1>
+
+<div style="margin-bottom:20px; text-align:center;">
+    <button onclick="addCommission()">+ Add Commission</button>
+</div>
+
+<div class="commission-grid" id="commission-grid"></div>
+
+<script>
+function addCommission() {
+    let title = prompt("Enter track title:");
+    let price = prompt("Enter price:");
+    let url = prompt("Enter music/video URL (YouTube or audio file):");
+
+    if (!title || !price || !url) {
+        alert("Please fill all fields!");
+        return;
+    }
+
+    let mediaHTML = "";
+
+    // If YouTube link → convert to embed
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        let videoId = url.split("v=")[1] || url.split("/").pop();
+        mediaHTML = `<iframe height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+    } 
+    // Otherwise treat as audio file
+    else {
+        mediaHTML = `<audio controls>
+                        <source src="${url}" type="audio/mpeg">
+                     </audio>`;
+    }
+
+    let card = document.createElement("div");
+    card.className = "commission-card";
+
+    card.innerHTML = `
+        ${mediaHTML}
+        <h3>${title}</h3>
+        <p>$${price}</p>
+    `;
+
+    document.getElementById("commission-grid").appendChild(card);
+}
+</script>
+
+</body>
+</html>
