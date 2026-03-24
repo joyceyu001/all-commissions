@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Commissions</title>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<h1 class="page-title">Art Commissions</h1>
+
+<div class="section">
+    <h2>Digital Art</h2>
+    <button onclick="addCommission('digital-grid')">+ Add Commission</button>
+    <div class="commission-grid" id="digital-grid"></div>
+</div>
+
+<div class="section">
+    <h2>Crochet</h2>
+    <button onclick="addCommission('crochet-grid')">+ Add Commission</button>
+    <div class="commission-grid" id="crochet-grid"></div>
+</div>
+
+<div class="section">
+    <h2>Jewelry</h2>
+    <button onclick="addCommission('jewelry-grid')">+ Add Commission</button>
+    <div class="commission-grid" id="jewelry-grid"></div>
+</div>
+
+<div class="section">
+    <h2>Pottery</h2>
+    <button onclick="addCommission('pottery-grid')">+ Add Commission</button>
+    <div class="commission-grid" id="pottery-grid"></div>
+</div>
+
+<div class="section">
+    <h2>Music</h2>
+    <button onclick="addMusicCommission()">+ Add Music</button>
+    <div class="commission-grid" id="music-grid"></div>
+</div>
+
+<script>
+function addCommission(gridId) {
+    let title = prompt("Enter title:");
+    let price = prompt("Enter price:");
+    let image = prompt("Enter image URL:");
+
+    if (!title || !price || !image) {
+        alert("Fill all fields!");
+        return;
+    }
+
+    let card = document.createElement("div");
+    card.className = "commission-card";
+
+    card.innerHTML = `
+        <img src="${image}">
+        <h3>${title}</h3>
+        <p>$${price}</p>
+    `;
+
+    document.getElementById(gridId).appendChild(card);
+}
+
+// MUSIC VERSION
+function addMusicCommission() {
+    let title = prompt("Track title:");
+    let price = prompt("Price:");
+    let url = prompt("YouTube or audio URL:");
+
+    if (!title || !price || !url) {
+        alert("Fill all fields!");
+        return;
+    }
+
+    let media = "";
+
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        let id = url.split("v=")[1] || url.split("/").pop();
+        media = `<iframe height="200" src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`;
+    } else {
+        media = `
+            <audio controls>
+                <source src="${url}" type="audio/mpeg">
+            </audio>
+        `;
+    }
+
+    let card = document.createElement("div");
+    card.className = "commission-card";
+
+    card.innerHTML = `
+        ${media}
+        <h3>${title}</h3>
+        <p>$${price}</p>
+    `;
+
+    document.getElementById("music-grid").appendChild(card);
+}
+</script>
+
+</body>
+</html>
