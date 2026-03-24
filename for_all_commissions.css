@@ -1,0 +1,7 @@
+.category-section {
+    display: none;
+}
+
+.category-section.active {
+    display: block;
+}
